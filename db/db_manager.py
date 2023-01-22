@@ -13,8 +13,8 @@ ORDER_ID, CUSTOMER_ID = add_customer_to_order_id()
 
 def add_orders_to_db() -> NoReturn:
     orders = []
+    random_customer = 1
     for data in ORDER_DATA:
-        random_customer = 1
         order = Order(
             device=data['device'],
             serial_number=data['serial_number'],
@@ -26,7 +26,6 @@ def add_orders_to_db() -> NoReturn:
             customer_id=random_customer
         )
         random_customer += 1
-        print(random_customer)
         orders.append(order)
     session.add_all(orders)
     session.commit()

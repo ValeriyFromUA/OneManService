@@ -6,4 +6,3 @@ x = session.query(Order).all()
 for el in x:
     el = el.to_dict()
     customer = el['customer']
-    print(customer.first_name)
