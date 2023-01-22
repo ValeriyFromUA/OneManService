@@ -15,5 +15,5 @@ def get_engine(url: str = DATABASE_URI) -> Engine:
 
 
 def get_session() -> Session:
-    session = sessionmaker(bind=get_engine())
-    return session()
+    Session = sessionmaker(bind=get_engine())
+    return Session()

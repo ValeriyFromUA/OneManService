@@ -1,12 +1,12 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 
 from models.base import Base
 
 
-class OrderModel(Base):
+class Order(Base):
     __tablename__ = 'order'
 
     id = Column(Integer, primary_key=True)
@@ -22,10 +22,12 @@ class OrderModel(Base):
     diagnosis = Column(String)
     comment = Column(String)
     status = Column(String, default='is waiting')
+    customer_id = Column(Integer, ForeignKey('customer.id'))
+    customer = relationship('Customer', back_populates='order')
 
     def __repr__(self):
         return (
-            f'\n {self.id} {self.device} {self.defect} {self.serial_number},'
+            f'\n {self.device} {self.defect} {self.serial_number},'
             f' {self.shape}, {self.kit}, {self.customer},'
             f' {self.price}, {self.start_date},'
             f' {self.end_date}, {self.max_time_for_fixing}, {self.diagnosis}, {self.comment}',
@@ -46,5 +48,5 @@ class OrderModel(Base):
             'max_time_for_fixing': self.max_time_for_fixing,
             'diagnosis': self.diagnosis,
             'comment': self.comment,
-            'status': self.status
+            'status': self.status,
         }

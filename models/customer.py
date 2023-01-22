@@ -5,20 +5,22 @@ from sqlalchemy.orm import relationship
 from models.base import Base
 
 
-class CustomerModel(Base):
+class Customer(Base):
     __tablename__ = 'customer'
 
     id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
-    phone = Column(PhoneNumberType())
+    phone = Column(String)
     email = Column(EmailType)
     socials = Column(String)
     address = Column(String)
-    orders = relationship('OrderModel', secondary='customer_order', backref='customer', cascade="all,delete")
+    order = relationship('Order', back_populates='customer')
 
     def __repr__(self):
-        return f'\n {self.first_name} {self.last_name} {self.phone} {self.email} {self.socials} {self.address} {self.orders}'
+        return (
+            f"{self.first_name} {self.last_name} {self.phone} {self.email} {self.socials} {self.address} "
+        )
 
     def to_dict(self):
         return {
@@ -29,5 +31,4 @@ class CustomerModel(Base):
             'email': self.email,
             'socials': self.socials,
             'address': self.address,
-            'orders': self.orders
         }
