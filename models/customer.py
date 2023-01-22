@@ -14,10 +14,11 @@ class CustomerModel(Base):
     phone = Column(PhoneNumberType())
     email = Column(EmailType)
     socials = Column(String)
-    orders = relationship('OrderModel', secondary='CustomerOrder', backref='customer', cascade="all,delete")
+    address = Column(String)
+    orders = relationship('OrderModel', secondary='customer_order', backref='customer', cascade="all,delete")
 
     def __repr__(self):
-        return f'\n {self.first_name} {self.last_name} : {self.phone}, {self.email}, {self.socials}; {self.orders}'
+        return f'\n {self.first_name} {self.last_name} {self.phone} {self.email} {self.socials} {self.address} {self.orders}'
 
     def to_dict(self):
         return {
@@ -27,5 +28,6 @@ class CustomerModel(Base):
             'phone': self.phone,
             'email': self.email,
             'socials': self.socials,
+            'address': self.address,
             'orders': self.orders
         }

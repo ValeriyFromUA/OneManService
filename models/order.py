@@ -15,7 +15,6 @@ class OrderModel(Base):
     serial_number = Column(String)
     shape = Column(String, default="used")
     kit = Column(String)
-    customer = relationship('CustomerModel', secondary='CustomerOrder', backref='order', cascade="all,delete")
     price = Column(String)
     start_date = Column(DateTime, default=datetime.datetime.utcnow())
     end_date = Column(DateTime)
