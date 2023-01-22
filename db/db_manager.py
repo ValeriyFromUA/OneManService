@@ -26,6 +26,7 @@ def add_orders_to_db() -> NoReturn:
             customer_id=random_customer
         )
         random_customer += 1
+        print(random_customer)
         orders.append(order)
     session.add_all(orders)
     session.commit()
