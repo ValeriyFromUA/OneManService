@@ -30,5 +30,5 @@ class Customer(Base):
             'phone': self.phone,
             'email': self.email,
             'socials': self.socials,
-            'address': self.address,
+            'address': self.address
         }

@@ -1,10 +1,11 @@
-from random import choice
 from typing import NoReturn
 
 from db.db_engine import get_session
 from db.fake_data_generator import generate_order_data, create_fake_customers, add_customer_to_order_id
 from models import Order, Customer
+from oms.logger import get_logger
 
+logger = get_logger(__name__)
 session = get_session()
 ORDER_DATA = generate_order_data()
 CUSTOMERS_DATA = create_fake_customers()
@@ -29,6 +30,7 @@ def add_orders_to_db() -> NoReturn:
         orders.append(order)
     session.add_all(orders)
     session.commit()
+    logger.info(f"Fake orders added to db")
 
 
 def add_customers_to_db() -> NoReturn:
@@ -44,8 +46,10 @@ def add_customers_to_db() -> NoReturn:
         customers.append(customer)
     session.add_all(customers)
     session.commit()
+    logger.info(f"Fake customers added to db")
 
 
 def add_fake_data_to_db():
     add_orders_to_db()
     add_customers_to_db()
+    logger.info(f"All fake data added to db")
