@@ -1,8 +1,6 @@
-from typing import List, Dict, NoReturn
+from typing import List, Dict, Tuple
 
-import requests
 from random import choice, randint
-from bs4 import BeautifulSoup
 
 DEFECTS = ['не вмикається', 'перегрівається', 'іноді вимикається', 'залиття рідиною', 'повільно працює']
 SHAPES = ['потертості, подряпини', 'тріщини на корпусі', 'новий', 'сліди залиття']
@@ -66,7 +64,6 @@ def generate_order_data() -> List[Dict]:
             'defect': choice(DEFECTS),
             'shape': choice(SHAPES),
             'kit': choice(KIT),
-            'diagnosis': choice(DIAGNOSIS),
             'status': choice(STATUS)
         }
         orders.append(data)
@@ -87,7 +84,13 @@ def create_fake_customers() -> List[Dict]:
     return customers
 
 
-def add_customer_to_order_id():
-    order_id = list(range(1, 43))
-    customer_id = list(reversed(order_id))
-    return order_id, customer_id
+def create_fake_comments() -> List[Dict]:
+    comments = []
+    for _ in range(len(DEVICES)):
+        data = {
+            'diagnosis': choice(DIAGNOSIS),
+            'comment': f'Замінено деталь #{randint(1, 999)}',
+            'price': randint(1000000, 9999999),
+        }
+        comments.append(data)
+    return comments

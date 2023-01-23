@@ -2,7 +2,7 @@ from operator import or_
 from typing import Dict, List, Optional, Tuple
 
 from db.db_engine import get_session
-from models import Customer, Order
+from models import Customer, Order, Comment
 from oms.logger import get_logger
 
 session = get_session()
@@ -28,9 +28,7 @@ def find_orders_by_device_name(name: str) -> List[Dict]:
 
 
 def add_new_order(device: str, defect: str, serial_number: str, shape: str, customer_id: int, kit: str = None,
-                  price=None,
-                  max_time_for_fixing: int = 14, diagnosis: str = None, comment: str = None,
-                  status: str = 'is waiting') -> Dict:
+                  max_time_for_fixing: int = 14, status: str = 'is waiting') -> Dict:
     order = Order(
         device=device,
         defect=defect,
@@ -38,10 +36,7 @@ def add_new_order(device: str, defect: str, serial_number: str, shape: str, cust
         shape=shape,
         customer_id=customer_id,
         kit=kit,
-        price=price,
         max_time_for_fixing=max_time_for_fixing,
-        diagnosis=diagnosis,
-        comment=comment,
         status=status
 
     )
@@ -103,3 +98,12 @@ def search_by_names(name: str) -> Tuple[List, List]:
     customers = find_customer_by_name(name)
     orders = find_orders_by_device_name(name)
     return customers, orders
+
+
+def add_comment(diagnosis: str, comment: str, price: int):
+    comment = Comment(
+        diagnosis=diagnosis,
+        comment=comment,
+        price=price
+    )
+

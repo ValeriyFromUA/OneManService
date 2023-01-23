@@ -1,15 +1,16 @@
 from typing import NoReturn
 
 from db.db_engine import get_session
-from db.fake_data_generator import generate_order_data, create_fake_customers, add_customer_to_order_id
-from models import Order, Customer
+from db.fake_data_generator import (generate_order_data, create_fake_customers,
+                                    create_fake_comments)
+from models import Order, Customer, Comment
 from oms.logger import get_logger
 
 logger = get_logger(__name__)
 session = get_session()
 ORDER_DATA = generate_order_data()
 CUSTOMERS_DATA = create_fake_customers()
-ORDER_ID, CUSTOMER_ID = add_customer_to_order_id()
+COMMENTS_DATA = create_fake_comments()
 
 
 def add_orders_to_db() -> NoReturn:
@@ -22,7 +23,6 @@ def add_orders_to_db() -> NoReturn:
             defect=data['defect'],
             shape=data['shape'],
             kit=data['kit'],
-            diagnosis=data['diagnosis'],
             status=data['status'],
             customer_id=random_customer
         )
@@ -49,7 +49,25 @@ def add_customers_to_db() -> NoReturn:
     logger.info(f"Fake customers added to db")
 
 
+def add_comments_to_db() -> NoReturn:
+    comments = []
+    order_id = 1
+    for data in COMMENTS_DATA:
+        order = Comment(
+            diagnosis=data['diagnosis'],
+            price=data['price'],
+            comment=data['comment'],
+            order_id=1
+        )
+        order_id += 1
+        comments.append(order)
+    session.add_all(comments)
+    session.commit()
+    logger.info(f"Fake comments added to db")
+
+
 def add_fake_data_to_db():
     add_orders_to_db()
     add_customers_to_db()
+    add_comments_to_db()
     logger.info(f"All fake data added to db")

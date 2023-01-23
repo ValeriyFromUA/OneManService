@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy_utils import EmailType, PhoneNumberType
+from sqlalchemy_utils import EmailType
 from sqlalchemy.orm import relationship
 
 from models.base import Base
