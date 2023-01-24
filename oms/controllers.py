@@ -24,7 +24,6 @@ def get_order_by_id(_id: int) -> Optional[Dict]:
     logger.info(f"Successfully find order #{_id} list")
     return order.to_dict()
 
-
 def find_orders_by_device_name(name: str) -> List[Dict]:
     orders = session.query(Order).filter(Order.device.like(f'%{name}%')).all()
     logger.info(f"Searching order with device name >{name}<")

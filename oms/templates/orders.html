@@ -15,6 +15,7 @@
             <th scope="col">Дата отримання в ремонт</th>
             <th scope="col">Дата видачі з ремонту</th>
             <th scope="col">Макс. тривалість ремонту</th>
+            <th scope="col">Тривалість ремонту</th>
             <th scope="col">Статус</th>
         </tr>
         </thead>
@@ -29,6 +30,7 @@
             <td>{{ line['start_date'] }}</td>
             <td>{{ line['end_date'] }}</td>
             <td>{{ line['max_time_for_fixing'] }}</td>
+            <td>{{ line['days_in_work'] }}</td>
             <td>{{ line['status'] }}</td>
         </tr>
         {% endfor %}

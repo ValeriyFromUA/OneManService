@@ -6,6 +6,11 @@ from sqlalchemy.orm import relationship
 from models.base import Base
 
 
+def days_in_work(start):
+    difference = datetime.datetime.now()-start
+    return difference.days
+
+
 class Order(Base):
     __tablename__ = 'order'
 
@@ -44,5 +49,6 @@ class Order(Base):
             'start_date': self.start_date,
             'end_date': self.end_date,
             'max_time_for_fixing': self.max_time_for_fixing,
+            'days_in_work': days_in_work(self.start_date),
             'status': self.status,
         }
